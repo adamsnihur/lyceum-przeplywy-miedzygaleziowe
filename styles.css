@@ -102,13 +102,40 @@ body {
 /* KaTeX Contrast Styling */
 .katex {
   font-size: 1.05em !important;
-  color: #0f172a !important;
+  color: inherit !important;
 }
 .katex-display {
   margin: 0.9rem 0 !important;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0.35rem 0;
+  color: inherit !important;
+}
+
+/* Explicit high-contrast KaTeX rules for dark containers */
+.bg-slate-900 .katex,
+.bg-slate-950 .katex,
+.bg-slate-800 .katex,
+[class*="bg-slate-9"] .katex {
+  color: #f8fafc !important;
+}
+
+.text-emerald-300 .katex,
+.text-emerald-300 .katex-display,
+.text-emerald-300.katex {
+  color: #6ee7b7 !important;
+}
+
+.text-emerald-400 .katex,
+.text-emerald-400 .katex-display,
+.text-emerald-400.katex {
+  color: #34d399 !important;
+}
+
+.text-white .katex,
+.text-white .katex-display,
+.text-white.katex {
+  color: #ffffff !important;
 }
 
 /* SaaS Card Base */

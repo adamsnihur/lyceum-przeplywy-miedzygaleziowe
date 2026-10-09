@@ -243,21 +243,36 @@
         </div>
 
         <!-- ŻELAZNA TOŻSAMOŚĆ MAKROEKONOMICZNA -->
-        <div class="p-5 bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl space-y-3">
-          <div class="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono">
-            Żelazna Tożsamość Makroekonomiczna Tablicy Leontiefa
+        <div class="p-6 bg-slate-900 text-white rounded-2xl border border-slate-800 shadow-md space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div class="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Żelazna Tożsamość Makroekonomiczna Tablicy Leontiefa</span>
+            </div>
+            <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">
+              Metoda Wydatkowa == Dochodowa
+            </span>
           </div>
+
           <div class="text-sm leading-relaxed text-slate-200">
-            Dla każdego sektora $i$ suma sprzedaży wierszem (produkcja globalna wyjściowa) musi być równa sumie nakładów kolumną (nakłady globalne wejściowe):
+            Dla każdego sektora <span class="text-emerald-300 font-bold">$i$</span> suma sprzedaży wierszem (produkcja globalna wyjściowa) musi być równa sumie nakładów kolumną (nakłady globalne wejściowe):
           </div>
-          <div class="bg-slate-950/70 p-3 rounded-lg font-mono text-xs text-emerald-300">
+
+          <div class="bg-slate-950 p-4 rounded-xl font-mono text-sm text-emerald-300 border border-slate-800 shadow-inner">
             $$X_i = \sum_{j=1}^n z_{ij} + Y_i \quad \text{(Bilans Podziału Produkcji)}$$
             $$X_j = \sum_{i=1}^n z_{ij} + V_j \quad \text{(Bilans Kosztów Wytwarzania)}$$
           </div>
-          <div class="text-xs text-slate-300">
-            Ponieważ suma całkowitej produkcji globalnej wierszami jest tożsamościowo równa sumie kolumnami:
-            $$\sum_{i=1}^n X_i = \sum_{j=1}^n X_j \implies \sum_{i=1}^n Y_i = \sum_{j=1}^n V_j = \text{PKB (Produkt Krajowy Brutto)}$$
-            Tożsamość ta dowodzi fundamentalnej zgodności metody wydatkowej (suma popytu finalnego) i metody dochodowej (suma wartości dodanej) szacowania PKB.
+
+          <div class="p-4 bg-slate-800/60 rounded-xl border border-slate-700/70 space-y-2">
+            <div class="text-xs text-slate-300">
+              Ponieważ suma całkowitej produkcji globalnej wierszami jest tożsamościowo równa sumie kolumnami:
+            </div>
+            <div class="text-white font-bold text-center py-1">
+              $$\sum_{i=1}^n X_i = \sum_{j=1}^n X_j \implies \sum_{i=1}^n Y_i = \sum_{j=1}^n V_j = \text{PKB (Produkt Krajowy Brutto)}$$
+            </div>
+            <div class="text-[11px] text-slate-400 leading-relaxed border-t border-slate-700/50 pt-2">
+              Tożsamość ta dowodzi fundamentalnej zgodności metody wydatkowej (suma popytu finalnego) i metody dochodowej (suma wartości dodanej) szacowania PKB.
+            </div>
           </div>
         </div>
       </section>
@@ -349,9 +364,11 @@
           Skąd bierze się potęga macierzy $(I - A)^{-1}$? W analizie matematycznej macierz odwrotna może być przedstawiona jako uogólnienie sumy nieskończonego szeregu geometrycznego (tzw. <strong>szereg Neumanna</strong>):
         </div>
 
-        <div class="bg-slate-900 text-white p-4 rounded-xl font-mono text-xs text-center">
-          $$(I - A)^{-1} = I + A + A^2 + A^3 + A^4 + \dots = \sum_{k=0}^{\infty} A^k$$
-          <div class="text-[11px] text-slate-400 mt-2 font-sans">
+        <div class="bg-slate-900 text-white p-5 rounded-2xl border border-slate-800 shadow-md font-mono text-center space-y-2">
+          <div class="text-sm md:text-base font-bold text-emerald-300 py-1">
+            $$(I - A)^{-1} = I + A + A^2 + A^3 + A^4 + \dots = \sum_{k=0}^{\infty} A^k$$
+          </div>
+          <div class="text-xs text-slate-300 font-sans">
             (Szereg jest ściśle zbieżny, ponieważ promień spektralny $\rho(A) < 1$)
           </div>
         </div>

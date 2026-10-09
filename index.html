@@ -16,8 +16,8 @@
   <!-- Plotly.js for interactive quantitative charts -->
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 
-  <!-- Custom Stylesheet -->
-  <link rel="stylesheet" href="styles.css">
+  <!-- Custom Stylesheet (Cache Buster) -->
+  <link rel="stylesheet" href="styles.css?v=2.1.0">
 </head>
 <body class="bg-[#f8fafc] text-slate-900 antialiased min-h-screen">
 
@@ -242,35 +242,35 @@
           </div>
         </div>
 
-        <!-- ŻELAZNA TOŻSAMOŚĆ MAKROEKONOMICZNA -->
-        <div class="p-6 bg-slate-900 text-white rounded-2xl border border-slate-800 shadow-md space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div class="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <!-- ŻELAZNA TOŻSAMOŚĆ MAKROEKONOMICZNA (LIGHT THEME - PEŁNA CZYTELNOŚĆ) -->
+        <div class="p-6 bg-emerald-50/70 text-slate-900 rounded-2xl border-2 border-emerald-300 shadow-sm space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-200 pb-3">
+            <div class="text-xs font-bold uppercase tracking-wider text-emerald-800 font-mono flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse"></span>
               <span>Żelazna Tożsamość Makroekonomiczna Tablicy Leontiefa</span>
             </div>
-            <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">
+            <span class="text-[10px] font-mono px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold">
               Metoda Wydatkowa == Dochodowa
             </span>
           </div>
 
-          <div class="text-sm leading-relaxed text-slate-200">
-            Dla każdego sektora <span class="text-emerald-300 font-bold">$i$</span> suma sprzedaży wierszem (produkcja globalna wyjściowa) musi być równa sumie nakładów kolumną (nakłady globalne wejściowe):
+          <div class="text-sm leading-relaxed text-slate-800">
+            Dla każdego sektora <strong class="font-bold text-emerald-900">$i$</strong> suma sprzedaży wierszem (produkcja globalna wyjściowa) musi być równa sumie nakładów kolumną (nakłady globalne wejściowe):
           </div>
 
-          <div class="bg-slate-950 p-4 rounded-xl font-mono text-sm text-emerald-300 border border-slate-800 shadow-inner">
+          <div class="bg-white p-4 rounded-xl font-mono text-sm text-slate-900 border border-emerald-300 shadow-sm">
             $$X_i = \sum_{j=1}^n z_{ij} + Y_i \quad \text{(Bilans Podziału Produkcji)}$$
             $$X_j = \sum_{i=1}^n z_{ij} + V_j \quad \text{(Bilans Kosztów Wytwarzania)}$$
           </div>
 
-          <div class="p-4 bg-slate-800/60 rounded-xl border border-slate-700/70 space-y-2">
-            <div class="text-xs text-slate-300">
+          <div class="p-4 bg-white rounded-xl border border-emerald-200 shadow-sm space-y-2">
+            <div class="text-xs text-slate-700 font-medium">
               Ponieważ suma całkowitej produkcji globalnej wierszami jest tożsamościowo równa sumie kolumnami:
             </div>
-            <div class="text-white font-bold text-center py-1">
+            <div class="text-slate-900 font-bold text-center py-1">
               $$\sum_{i=1}^n X_i = \sum_{j=1}^n X_j \implies \sum_{i=1}^n Y_i = \sum_{j=1}^n V_j = \text{PKB (Produkt Krajowy Brutto)}$$
             </div>
-            <div class="text-[11px] text-slate-400 leading-relaxed border-t border-slate-700/50 pt-2">
+            <div class="text-[11px] text-slate-600 leading-relaxed border-t border-emerald-100 pt-2">
               Tożsamość ta dowodzi fundamentalnej zgodności metody wydatkowej (suma popytu finalnego) i metody dochodowej (suma wartości dodanej) szacowania PKB.
             </div>
           </div>
@@ -364,11 +364,14 @@
           Skąd bierze się potęga macierzy $(I - A)^{-1}$? W analizie matematycznej macierz odwrotna może być przedstawiona jako uogólnienie sumy nieskończonego szeregu geometrycznego (tzw. <strong>szereg Neumanna</strong>):
         </div>
 
-        <div class="bg-slate-900 text-white p-5 rounded-2xl border border-slate-800 shadow-md font-mono text-center space-y-2">
-          <div class="text-sm md:text-base font-bold text-emerald-300 py-1">
+        <div class="bg-blue-50/70 text-slate-900 p-6 rounded-2xl border-2 border-blue-200 shadow-sm font-mono text-center space-y-3">
+          <div class="text-xs font-bold uppercase tracking-wider text-blue-700 font-mono">
+            Rozwinięcie w Nieskończony Szereg Geometryczny Macierzy
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm text-base font-bold text-blue-900">
             $$(I - A)^{-1} = I + A + A^2 + A^3 + A^4 + \dots = \sum_{k=0}^{\infty} A^k$$
           </div>
-          <div class="text-xs text-slate-300 font-sans">
+          <div class="text-xs text-slate-600 font-sans">
             (Szereg jest ściśle zbieżny, ponieważ promień spektralny $\rho(A) < 1$)
           </div>
         </div>

@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div class="flex items-center gap-3">
+    <div class="hidden sm:flex items-center gap-3">
       <div class="hidden md:flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-lg text-xs font-mono text-slate-600 border border-slate-200">
         <span>Wassily Leontief (Nobel 1973)</span>
         <span class="text-slate-400">|</span>
@@ -531,11 +531,11 @@
 
         <!-- TABLICA PRZEPŁYWÓW MIĘDZYGAŁĘZIOWYCH (TABLICA ASYMETRYCZNA I-O) -->
         <div class="space-y-3">
-          <div class="flex items-center justify-between">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">
               Interaktywna Tablica Przepływów Międzygałęziowych (mld PLN)
             </h4>
-            <div class="flex items-center gap-3 text-[11px] font-mono">
+            <div class="flex flex-wrap items-center gap-3 text-[11px] font-mono">
               <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-white border border-slate-300 rounded"></span> Ćw. I: B2B</span>
               <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-emerald-50 border border-emerald-300 rounded"></span> Ćw. II: Popyt $Y$</span>
               <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-amber-50 border border-amber-300 rounded"></span> Ćw. III: Wartość $V$</span>
@@ -1045,22 +1045,42 @@ if __name__ == "__main__":
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-700">
           <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-            <div class="font-bold text-slate-900">Pozycje Fundamentalne:</div>
-            <ul class="space-y-1.5 list-disc pl-4 text-slate-600">
-              <li><strong>Leontief, W. (1936):</strong> <em>Quantitative Input and Output Relations in the Economic System of the United States</em>, The Review of Economics and Statistics.</li>
-              <li><strong>Leontief, W. (1941):</strong> <em>The Structure of American Economy, 1919-1929</em>, Harvard University Press.</li>
-              <li><strong>Miller, R. E., Blair, P. D. (2009):</strong> <em>Input-Output Analysis: Foundations and Extensions</em>, Cambridge University Press (Kompletny podręcznik akademicki).</li>
-              <li><strong>Hawkins, D., Simon, H. A. (1949):</strong> <em>Note: Some Conditions of Macroeconomic Stability</em>, Econometrica.</li>
+            <div class="font-bold text-slate-900">Pozycje Fundamentalne (Artykuły Założycielskie):</div>
+            <ul class="space-y-2 text-slate-600">
+              <li>
+                <strong>Leontief, W. (1936):</strong> <em>Quantitative Input and Output Relations in the Economic System of the United States</em>, The Review of Economics and Statistics, 18(3), 105-125.<br>
+                <a href="https://doi.org/10.2307/1927837" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-[11px]">🔗 DOI: 10.2307/1927837</a>
+              </li>
+              <li>
+                <strong>Hawkins, D., Simon, H. A. (1949):</strong> <em>Note: Some Conditions of Macroeconomic Stability</em>, Econometrica, 17(3/4), 245-248.<br>
+                <a href="https://doi.org/10.2307/1905526" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-[11px]">🔗 DOI: 10.2307/1905526</a>
+              </li>
+              <li>
+                <strong>Miller, R. E., Blair, P. D. (2009):</strong> <em>Input-Output Analysis: Foundations and Extensions</em>, Cambridge University Press.<br>
+                <a href="https://doi.org/10.1017/CBO9780511642012" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-[11px]">🔗 DOI: 10.1017/CBO9780511642012</a>
+              </li>
+              <li>
+                <strong>Leontief, W. (1941):</strong> <em>The Structure of American Economy, 1919-1929</em>, Harvard University Press (Nagroda Nobla w dziedzinie nauk ekonomicznych 1973).
+              </li>
             </ul>
           </div>
 
           <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
             <div class="font-bold text-slate-900">Standardy Statystyki Narodowej & Bazy Danych:</div>
-            <ul class="space-y-1.5 list-disc pl-4 text-slate-600">
-              <li><strong>Główny Urząd Statystyczny (GUS):</strong> <em>Bilans przepływów międzygałęziowych w bieżących i stałych cenach bazowych</em> (Publikacje 5-letnie).</li>
-              <li><strong>Eurostat (2008):</strong> <em>Eurostat Manual of Supply, Use and Input-Output Tables</em>, Methodologies and Working Papers.</li>
-              <li><strong>OECD TiVA:</strong> <em>Trade in Value Added Database</em> (Dekompozycja łańcuchów GVC).</li>
-              <li><strong>WIOD (World Input-Output Database):</strong> Globalna baza danych dla 43 państw świata.</li>
+            <ul class="space-y-2 text-slate-600">
+              <li>
+                <strong>Eurostat (2008):</strong> <em>Eurostat Manual of Supply, Use and Input-Output Tables</em>, Methodologies and Working Papers, Office for Official Publications of the European Communities.<br>
+                <a href="https://doi.org/10.2785/15729" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-mono text-[11px]">🔗 DOI: 10.2785/15729</a>
+              </li>
+              <li>
+                <strong>Główny Urząd Statystyczny (GUS):</strong> <em>Bilans przepływów międzygałęziowych w bieżących i stałych cenach bazowych</em> (Publikacje 5-letnie GUS).
+              </li>
+              <li>
+                <strong>OECD TiVA:</strong> <em>Trade in Value Added Database</em> (Dekompozycja łańcuchów GVC).
+              </li>
+              <li>
+                <strong>WIOD (World Input-Output Database):</strong> Globalna baza danych dla 43 państw świata (Groningen Growth and Development Centre).
+              </li>
             </ul>
           </div>
         </div>

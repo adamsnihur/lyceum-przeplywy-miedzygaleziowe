@@ -14,7 +14,8 @@ async def run_tests():
         page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
         page.on("pageerror", lambda err: page_errors.append(str(err)))
 
-        file_path = "file://" + os.path.abspath("Lyceum/przeplywy-miedzygaleziowe/index.html")
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = "file://" + os.path.join(base_dir, "index.html")
         print(f"Loading {file_path}...")
         await page.goto(file_path, wait_until="networkidle", timeout=30000)
         await page.wait_for_timeout(2000)
@@ -80,8 +81,47 @@ async def run_tests():
         assert "5 / 5" in quiz_alert
         assert "100%" in quiz_alert
 
-        # 5. Capture screenshot
-        screenshot_path = os.path.abspath("Lyceum/przeplywy-miedzygaleziowe/screenshot_verified.png")
+        # Quality Gate: SVG Text Clipping & DOM Overflow Check
+        print("Running Quality Gate: SVG Text Clipping & DOM Overflow Check...")
+        clipped_svg = await page.evaluate('''() => {
+            const issues = [];
+            document.querySelectorAll('svg').forEach(svg => {
+                const vb = svg.viewBox.baseVal;
+                if (!vb || vb.width === 0) return;
+                svg.querySelectorAll('text, tspan').forEach(t => {
+                    const text = t.textContent.trim();
+                    if (!text) return;
+                    try {
+                        const bbox = t.getBBox();
+                        if (bbox.x < vb.x - 2 || (bbox.x + bbox.width) > (vb.x + vb.width + 2)) {
+                            issues.push({ text: text, x: bbox.x, width: bbox.width, vb_x: vb.x, vb_w: vb.width });
+                        }
+                    } catch (e) {}
+                });
+            });
+            return issues;
+        }''')
+        print(f"SVG Text clipping issues found: {len(clipped_svg)}")
+        assert len(clipped_svg) == 0, f"Found clipped SVG text elements: {clipped_svg}"
+
+        # Multi-viewport responsive tests
+        viewports = [
+            ("Desktop 1440px", {"width": 1440, "height": 900}),
+            ("Tablet 768px", {"width": 768, "height": 1024}),
+            ("Mobile 375px", {"width": 375, "height": 812})
+        ]
+        for name, vp in viewports:
+            await page.set_viewport_size(vp)
+            await page.wait_for_timeout(300)
+            has_h_scroll = await page.evaluate('''() => {
+                return document.documentElement.scrollWidth > window.innerWidth + 2;
+            }''')
+            print(f"Viewport {name} -> Horizontal scroll detected: {has_h_scroll}")
+            assert not has_h_scroll, f"Horizontal scroll detected on {name}!"
+
+        # Reset viewport to 1440px and capture verified screenshot
+        await page.set_viewport_size({"width": 1440, "height": 950})
+        screenshot_path = os.path.join(base_dir, "screenshot_verified.png")
         await page.screenshot(path=screenshot_path, full_page=True)
         print(f"Full page screenshot saved to {screenshot_path}")
 

@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Przepływy Międzygałęziowe w Makroekonomii - Model Leontiefa | Lyceum</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- KaTeX CDN for mathematical formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Plotly.js for interactive quantitative charts -->
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-[#f8fafc] text-slate-900 antialiased min-h-screen">
+
+  <!-- ========================================================================= -->
+  <!-- PASEK GÓRNY (STICKY HEADER)                                              -->
+  <!-- ========================================================================= -->
+  <header id="stickyHeader" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center text-lg shadow-sm shadow-blue-500/20">
+        📊
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600 font-mono">Lyceum Macroeconomics</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          <span class="text-xs font-semibold text-slate-500">Analiza Input-Output & Model Leontiefa</span>
+        </div>
+        <h1 class="text-sm font-bold text-slate-900 leading-none">Przepływy Międzygałęziowe: Anatomia Gospodarki Narodowej</h1>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <div class="hidden md:flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-lg text-xs font-mono text-slate-600 border border-slate-200">
+        <span>Wassily Leontief (Nobel 1973)</span>
+        <span class="text-slate-400">|</span>
+        <span class="text-emerald-700 font-semibold">Macierz (I - A)⁻¹</span>
+      </div>
+      <button onclick="window.print()" class="btn-secondary text-xs">
+        <span>🖨️ Drukuj / PDF</span>
+      </button>
+      <a href="../README.md" class="btn-primary text-xs">
+        <span>Indeks Lyceum</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- UKŁAD DWUKOLUMNOWY (SIDEBAR + GŁÓWNA TREŚĆ)                              -->
+  <!-- ========================================================================= -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex gap-8">
+
+    <!-- NAWIGACJA BOCZNA (TOC) -->
+    <aside class="hidden lg:block w-72 shrink-0">
+      <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
+        <div class="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+          Spis Treści Traktatu
+        </div>
+
+        <nav class="space-y-1 text-xs">
+          <a href="#m1-istota" class="nav-link active">
+            <span class="font-mono text-slate-400 mr-1.5">01.</span> Istota i Geneza Przepływów
+          </a>
+          <a href="#m2-tablica" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">02.</span> Anatomia Tablicy (4 Ćwiartki)
+          </a>
+          <a href="#m3-matematyka" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">03.</span> Formalny Model Leontiefa
+          </a>
+          <a href="#m4-neumann" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">04.</span> Szereg Neumanna & Fale Popytu
+          </a>
+          <a href="#m5-sandbox" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">05.</span> Interaktywny Symulator Sandbox
+          </a>
+          <a href="#m6-siec" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">06.</span> Graf Sieci Przepływów
+          </a>
+          <a href="#m7-powiazania" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">07.</span> Powiązania w Przód i w Tył
+          </a>
+          <a href="#m8-scenariusze" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">08.</span> Szoki & Polityka Gospodarcza
+          </a>
+          <a href="#m9-zastosowania" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">09.</span> GVC & Ślad Węglowy (EEIO)
+          </a>
+          <a href="#m10-quiz" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">10.</span> Sprawdzian Wiedzy (Quiz)
+          </a>
+          <a href="#m11-python" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">11.</span> Kod Produkcyjny w Pythonie
+          </a>
+          <a href="#m12-zrodla" class="nav-link">
+            <span class="font-mono text-slate-400 mr-1.5">12.</span> Bibliografia & Źródła
+          </a>
+        </nav>
+
+        <div class="pt-3 border-t border-slate-100">
+          <div class="text-[11px] text-slate-500 leading-tight">
+            Wydanie Lyceum EdTech. Pełny model statyczny otwarty z dynamicznym odwracaniem macierzy w czasie rzeczywistym.
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- GŁÓWNA TREŚĆ DYDAKTYCZNA -->
+    <main class="flex-1 min-w-0 space-y-12">
+
+      <!-- HERO BANNER -->
+      <section class="saas-card p-8 bg-gradient-to-br from-white via-white to-blue-50/40 border-blue-100 relative overflow-hidden">
+        <div class="relative z-10 max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-100/80 text-blue-800 text-xs font-semibold mb-4 border border-blue-200">
+            <span class="live-pulse"></span>
+            <span>Równowaga Ogólna & Rachunki Narodowe</span>
+          </div>
+          <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Przepływy Międzygałęziowe w Makroekonomii
+          </h2>
+          <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+            Standardowa makroekonomia traktuje gospodarkę jak pojedynczy agregat: $Y = C + I + G + NX$. Analiza przepływów międzygałęziowych (Input-Output) otwiera tę czarną skrzynkę, ujawniając gęstą sieć wzajemnych dostaw surowców, energii i usług między sektorami. Poznaj model Wassily'ego Leontiefa, który zrewolucjonizował prognozowanie gospodarcze i przyniósł twórcy Nagrodę Nobla w 1973 roku.
+          </p>
+          <div class="flex flex-wrap items-center gap-3 mt-6">
+            <a href="#m5-sandbox" class="btn-primary text-xs">
+              <span>🚀 Uruchom Symulator Gospodarki</span>
+            </a>
+            <a href="#m3-matematyka" class="btn-secondary text-xs">
+              <span>📐 Analityczne Wyprowadzenie</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 1: ISTOTA I GENEZA PRZEPŁYWÓW MIĘDZYGAŁĘZIOWYCH                -->
+      <!-- ===================================================================== -->
+      <section id="m1-istota" class="saas-card p-6 md:p-8 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+          <span class="text-blue-600 font-mono text-sm font-bold">01.</span>
+          <h3 class="text-xl font-bold text-slate-900">Istota i Geneza Przepływów Międzygałęziowych</h3>
+        </div>
+
+        <div class="text-sm text-slate-700 leading-relaxed space-y-4">
+          <p>
+            Wyobraźmy sobie, że rząd decyduje się wybudować 1000 kilometrów linii kolei dużych prędkości. Z punktu widzenia prostego rachunku PKB widzimy jedynie wzrost wydatków inwestycyjnych o np. 40 miliardów złotych. Jednak dla fabryki pociągów ta decyzja oznacza konieczność zakupu tysięcy ton specjalistycznej stali, setek silników elektrycznych i ton przewodów miedzianych.
+          </p>
+          <p>
+            Huty stali, aby wyprodukować tę stal, muszą natychmiast kupić koks, rudę żelaza i gigawatogodziny energii elektrycznej. Z kolei elektrownie potrzebują węgla lub gazu oraz usług serwisowych od firm inżynieryjnych. Żadna gałąź gospodarki nie produkuje w próżni. Każde przedsiębiorstwo jest jednocześnie <strong>dostawcą</strong> dla innych podmiotów oraz <strong>klientem</strong> kupującym nakłady od reszty rynku.
+          </p>
+        </div>
+
+        <!-- 3 KAMIENIE MILOWE -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="text-xs font-bold font-mono text-blue-600">1758: François Quesnay</div>
+            <div class="text-xs font-bold text-slate-900">Tableau Économique</div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Jako nadworny lekarz Ludwika XV porównał obieg towarów w gospodarce do krążenia krwi w organizmie. Pierwsza w historii próba całościowego ujęcia współzależności między klasami i sektorami.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="text-xs font-bold font-mono text-indigo-600">1874: Léon Walras</div>
+            <div class="text-xs font-bold text-slate-900">Równowaga Ogólna</div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Sformalizował gospodarkę jako układ $N$ równoległych równań z $N$ niewiadomymi. Model był jednak czysto teoretyczną abstrakcją matematyczną, niemożliwą do wyliczenia w XIX wieku.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="text-xs font-bold font-mono text-emerald-600">1936-1973: Wassily Leontief</div>
+            <div class="text-xs font-bold text-slate-900">Analiza Input-Output (Nobel 1973)</div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Uczynił równowagę ogólną operacyjną empirycznie. Zbudował pierwsze tablice nakładów i wyników dla USA, wprowadzając macierze technologiczne i rozwiązując je numerycznie na wczesnych komputerach Harvard Mark I.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-4 bg-blue-50/70 border border-blue-200/80 rounded-xl flex items-start gap-3">
+          <span class="text-blue-600 text-lg">💡</span>
+          <div class="text-xs text-blue-900 leading-relaxed">
+            <strong>Kluczowa konkluzja makroekonomiczna:</strong> Zwykły rachunek PKB mierzy wyłącznie dobra finalne, celowo ignorując transakcje pośrednie (B2B), by uniknąć wielokrotnego liczenia. Jednak to właśnie w sferze przepływów międzygałęziowych rodzą się zatory płynnościowe, wąskie gardła surowcowe i propagacja szoków inflacyjnych.
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 2: ANATOMIA TABLICY PRZEPŁYWÓW MIĘDZYGAŁĘZIOWYCH               -->
+      <!-- ===================================================================== -->
+      <section id="m2-tablica" class="saas-card p-6 md:p-8 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+          <span class="text-blue-600 font-mono text-sm font-bold">02.</span>
+          <h3 class="text-xl font-bold text-slate-900">Anatomia Tablicy Przepływów Międzygałęziowych (IO Table)</h3>
+        </div>
+
+        <div class="text-sm text-slate-700 leading-relaxed">
+          Tablica przepływów międzygałęziowych (nazywana w polskiej statystyce publicznej GUS bilansem nakładów i wyników lub tablicą asymetryczną I-O) dzieli całą gospodarkę na cztery logiczne ćwiartki:
+        </div>
+
+        <!-- 4 ĆWIARTKI DIAGRAM -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 bg-white border-2 border-blue-200 rounded-xl space-y-2 relative">
+            <span class="q-badge bg-blue-100 text-blue-800">Ćwiartka I: Zużycie Pośrednie ($Z$)</span>
+            <div class="text-xs font-bold text-slate-900">Transakcje Międzygałęziowe B2B</div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Macierz kwadratowa $n \times n$. Element $z_{ij}$ reprezentuje wartość dostaw z sektora $i$ do sektora $j$ zużytych w bieżącej produkcji.
+              Jest to "wnętrze silnika" gospodarki.
+            </p>
+          </div>
+
+          <div class="p-4 bg-white border-2 border-emerald-200 rounded-xl space-y-2 relative">
+            <span class="q-badge bg-emerald-100 text-emerald-800">Ćwiartka II: Popyt Końcowy ($Y$)</span>
+            <div class="text-xs font-bold text-slate-900">Dobra Finalne dla Społeczeństwa</div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Wektor lub podmacierz obejmująca konsumpcję gospodarstw domowych ($C$), inwestycje przedsiębiorstw ($I$), wydatki rządowe ($G$) oraz eksport netto ($EX$). Produkcja opuszczająca system produkcyjny.
+            </p>
+          </div>
+
+          <div class="p-4 bg-white border-2 border-amber-200 rounded-xl space-y-2 relative">
+            <span class="q-badge bg-amber-100 text-amber-800">Ćwiartka III: Wartość Dodana ($V$)</span>
+            <div class="text-xs font-bold text-slate-900">Koszty Czynników Pierwotnych</div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Wynagrodzenia pracowników ($W$), zyski kapitałowe / nadwyżka operacyjna brutto ($OS$), amortyzacja środków trwałych ($D$) oraz podatki od produktów minus dotacje ($T$).
+            </p>
+          </div>
+
+          <div class="p-4 bg-white border-2 border-slate-200 rounded-xl space-y-2 relative">
+            <span class="q-badge bg-slate-100 text-slate-800">Ćwiartka IV: Redystrybucja Dochodów</span>
+            <div class="text-xs font-bold text-slate-900">Transfery i Przepływy Pierwotne</div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Przenoszenie dochodów pierwotnych na cele popytu końcowego (np. podatki bezpośrednie finansujące świadczenia socjalne). W czystych modelach produkcyjnych często agregowana lub pomijana.
+            </p>
+          </div>
+        </div>
+
+        <!-- ŻELAZNA TOŻSAMOŚĆ MAKROEKONOMICZNA -->
+        <div class="p-5 bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl space-y-3">
+          <div class="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono">
+            Żelazna Tożsamość Makroekonomiczna Tablicy Leontiefa
+          </div>
+          <div class="text-sm leading-relaxed text-slate-200">
+            Dla każdego sektora $i$ suma sprzedaży wierszem (produkcja globalna wyjściowa) musi być równa sumie nakładów kolumną (nakłady globalne wejściowe):
+          </div>
+          <div class="bg-slate-950/70 p-3 rounded-lg font-mono text-xs text-emerald-300">
+            $$X_i = \sum_{j=1}^n z_{ij} + Y_i \quad \text{(Bilans Podziału Produkcji)}$$
+            $$X_j = \sum_{i=1}^n z_{ij} + V_j \quad \text{(Bilans Kosztów Wytwarzania)}$$
+          </div>
+          <div class="text-xs text-slate-300">
+            Ponieważ suma całkowitej produkcji globalnej wierszami jest tożsamościowo równa sumie kolumnami:
+            $$\sum_{i=1}^n X_i = \sum_{j=1}^n X_j \implies \sum_{i=1}^n Y_i = \sum_{j=1}^n V_j = \text{PKB (Produkt Krajowy Brutto)}$$
+            Tożsamość ta dowodzi fundamentalnej zgodności metody wydatkowej (suma popytu finalnego) i metody dochodowej (suma wartości dodanej) szacowania PKB.
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 3: FORMALNY MODEL MATEMATYCZNY LEONTIEFA                      -->
+      <!-- ===================================================================== -->
+      <section id="m3-matematyka" class="saas-card p-6 md:p-8 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+          <span class="text-blue-600 font-mono text-sm font-bold">03.</span>
+          <h3 class="text-xl font-bold text-slate-900">Formalny Model Matematyczny: Wyprowadzenie Macierzy Odwrotnej</h3>
+        </div>
+
+        <div class="text-sm text-slate-700 leading-relaxed space-y-4">
+          <p>
+            Kluczowym założeniem Leontiefa jest <strong>hipoteza liniowości technologii (stałych współczynników nakładów)</strong>. Oznacza to, że funkcja produkcji ma postać sztywnych proporcji (funkcja Leontiefa): aby wyprodukować jednostkę dobra $j$, sektor potrzebuje stałych, technologicznie zdeterminowanych ilości dóbr pośrednich.
+          </p>
+        </div>
+
+        <!-- 3 KROKI WYPROWADZENIA -->
+        <div class="space-y-4">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="text-xs font-bold text-blue-600 font-mono">KROK 1: Macierz Nakładów Bezpośrednich (Współczynników Technologicznych) $A$</span>
+            <p class="text-xs text-slate-700">
+              Definiujemy współczynnik kosztów $a_{ij}$ jako stosunek wartości zużytego wyrobu gałęzi $i$ do produkcji globalnej gałęzi $j$:
+            </p>
+            <div class="font-mono text-xs text-slate-900 bg-white p-2.5 rounded border border-slate-200">
+              $$a_{ij} = \frac{z_{ij}}{X_j} \implies z_{ij} = a_{ij} X_j$$
+            </div>
+            <p class="text-[11px] text-slate-500">
+              Współczynnik $a_{ij}$ informuje, ile groszy wyrobu gałęzi $i$ trzeba zużyć bezpośrednio, aby wyprodukować 1 złoty wyrobu gałęzi $j$.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="text-xs font-bold text-indigo-600 font-mono">KROK 2: Równanie Bilansowe w Zapisie Macierzowym</span>
+            <p class="text-xs text-slate-700">
+              Podstawiając zależność $z_{ij} = a_{ij} X_j$ do bilansu produkcji globalnej:
+            </p>
+            <div class="font-mono text-xs text-slate-900 bg-white p-2.5 rounded border border-slate-200">
+              $$X_i = \sum_{j=1}^n a_{ij} X_j + Y_i \quad \iff \quad X = A X + Y$$
+            </div>
+            <p class="text-[11px] text-slate-500">
+              Gdzie $X = [X_1, \dots, X_n]^T$ to wektor produkcji globalnej, $A$ to macierz kwadratowa nakładów $n \times n$, a $Y = [Y_1, \dots, Y_n]^T$ to wektor popytu końcowego.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="text-xs font-bold text-emerald-600 font-mono">KROK 3: Rozwiązanie Podstawowe: Macierz Odwrotna Leontiefa</span>
+            <p class="text-xs text-slate-700">
+              Grupujemy wyrazy z wektorem produkcji $X$ po lewej stronie równania, wprowadzając macierz jednostkową $I$:
+            </p>
+            <div class="font-mono text-xs text-slate-900 bg-white p-2.5 rounded border border-slate-200">
+              $$I \cdot X - A X = Y \implies (I - A) X = Y$$
+              $$X = (I - A)^{-1} Y = L \cdot Y$$
+            </div>
+            <p class="text-[11px] text-slate-500">
+              Macierz $L = (I - A)^{-1}$ nazywana jest <strong>macierzą odwrotną Leontiefa</strong> (lub macierzą pełnych nakładów). Element $l_{ij}$ oznacza, o ile jednostek musi wzrosnąć produkcja globalna sektora $i$, aby sektor $j$ mógł dostarczyć na rynek 1 dodatkową jednostkę popytu końcowego.
+            </p>
+          </div>
+        </div>
+
+        <!-- TWIERDZENIE HAWKINSA-SIMONA -->
+        <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-xl space-y-2">
+          <div class="text-xs font-bold font-mono text-amber-800">
+            ⚠️ Warunki Produktywności Hawkinsa-Simona (1949)
+          </div>
+          <p class="text-xs text-amber-900 leading-relaxed">
+            Czy dla każdego nieujemnego wektora popytu finalnego $Y \ge 0$ model wyznaczy nieujemną produkcję $X \ge 0$?
+            Tylko wtedy, gdy gospodarka jest <strong>produktywna</strong>, co oznacza, że do wyprodukowania jednostki dobra nie zużywa się więcej tego dobra niż wynosi produkcja!
+          </p>
+          <div class="text-xs font-mono text-amber-950 bg-amber-100/50 p-2 rounded">
+            $$\det(I - A) > 0 \quad \text{oraz wszystkie wiodące minory główne macierzy } (I - A) > 0$$
+            W praktyce: suma każdej kolumny macierzy $A$ musi być mniejsza od 1 ($\sum_{i=1}^n a_{ij} < 1$), co gwarantuje istnienie dodatniej wartości dodanej.
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 4: SZEREG NEUMANNA I FALE MNOŻNIKA                           -->
+      <!-- ===================================================================== -->
+      <section id="m4-neumann" class="saas-card p-6 md:p-8 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+          <span class="text-blue-600 font-mono text-sm font-bold">04.</span>
+          <h3 class="text-xl font-bold text-slate-900">Szereg Neumanna: Intuicja Fal Mnożnikowych w Gospodarce</h3>
+        </div>
+
+        <div class="text-sm text-slate-700 leading-relaxed">
+          Skąd bierze się potęga macierzy $(I - A)^{-1}$? W analizie matematycznej macierz odwrotna może być przedstawiona jako uogólnienie sumy nieskończonego szeregu geometrycznego (tzw. <strong>szereg Neumanna</strong>):
+        </div>
+
+        <div class="bg-slate-900 text-white p-4 rounded-xl font-mono text-xs text-center">
+          $$(I - A)^{-1} = I + A + A^2 + A^3 + A^4 + \dots = \sum_{k=0}^{\infty} A^k$$
+          <div class="text-[11px] text-slate-400 mt-2 font-sans">
+            (Szereg jest ściśle zbieżny, ponieważ promień spektralny $\rho(A) < 1$)
+          </div>
+        </div>
+
+        <!-- FALE POPYTU W GOSPODARCE -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 pt-2">
+          <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl space-y-1">
+            <div class="text-xs font-bold text-blue-700 font-mono">Faza 0: $I \cdot Y$</div>
+            <div class="text-xs font-bold text-slate-900">Impuls Pierwotny</div>
+            <p class="text-[11px] text-slate-600">
+              Sam produkt końcowy, np. fabryka musi wyprodukować samochody zamówione przez konsumentów.
+            </p>
+          </div>
+
+          <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl space-y-1">
+            <div class="text-xs font-bold text-emerald-700 font-mono">Faza 1: $A \cdot Y$</div>
+            <div class="text-xs font-bold text-slate-900">Dostawcy Bezpośredni</div>
+            <p class="text-[11px] text-slate-600">
+              Huty dostarczają blachy, producenci akumulatorów baterie, a fabryki opon dostarczają ogumienie.
+            </p>
+          </div>
+
+          <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-1">
+            <div class="text-xs font-bold text-amber-700 font-mono">Faza 2: $A^2 \cdot Y$</div>
+            <div class="text-xs font-bold text-slate-900">Dostawcy II Rzędu</div>
+            <p class="text-[11px] text-slate-600">
+              Kopalnie dostarczają rudę dla hut, a zakłady chemiczne dostarczają kwas litowy dla fabryk baterii.
+            </p>
+          </div>
+
+          <div class="p-3 bg-purple-50 border border-purple-200 rounded-xl space-y-1">
+            <div class="text-xs font-bold text-purple-700 font-mono">Faza 3: $A^3 \cdot Y$</div>
+            <div class="text-xs font-bold text-slate-900">Dostawcy III Rzędu</div>
+            <p class="text-[11px] text-slate-600">
+              Elektrownie produkują prąd dla kopalń rudy, a rafinerie dostarczają paliwo do maszyn górniczych.
+            </p>
+          </div>
+        </div>
+
+        <!-- WYKRES PLOTLY: SZEREG NEUMANNA -->
+        <div class="pt-4 border-t border-slate-100">
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">
+              Wizualizacja Rozchodzenia Się Fal w Szeregu Neumanna (mld PLN)
+            </h4>
+            <span class="text-xs text-slate-500 font-mono">Aktualizowane z symulatora poniżej</span>
+          </div>
+          <div id="neumannChart" class="w-full"></div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 5: INTERAKTYWNY SANDBOX - TABLICA INPUT-OUTPUT 3 SEKTORÓW     -->
+      <!-- ===================================================================== -->
+      <section id="m5-sandbox" class="saas-card p-6 md:p-8 space-y-6 border-blue-200">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-blue-600 font-mono text-sm font-bold">05.</span>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900">Interaktywny Sandbox: 3-Sektorowa Gospodarka Narodowa</h3>
+              <p class="text-xs text-slate-500">Zmieniaj popyt finalny lub wybierz scenariusz makroekonomiczny</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-md text-xs font-bold font-mono">
+              Rozwiązanie w 60 fps
+            </span>
+          </div>
+        </div>
+
+        <!-- COACHMARK UX -->
+        <div class="p-4 bg-blue-50/70 border border-blue-200/80 rounded-xl flex items-start gap-3">
+          <span class="text-blue-600 text-lg">👉</span>
+          <div class="text-xs text-blue-900 leading-relaxed">
+            <strong>Jak z tego korzystać:</strong>
+            1. Przesuwaj suwaki popytu końcowego $Y$ (np. zwiększ popyt na Przemysł o +60 mld PLN).
+            2. Obserwuj natychmiastowe przeliczenie macierzy odwrotnej $(I - A)^{-1}$ oraz wzrost produkcji u dostawców w tablicy poniżej.
+            3. Sprawdź, że suma popytu końcowego zawsze dokładnie równa się sumie wartości dodanej (tożsamość PKB).
+          </div>
+        </div>
+
+        <!-- KPI METRICS PANEL -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block font-mono">PKB Gospodarki ($\sum Y = \sum V$)</span>
+            <div id="kpiGdp" class="text-xl font-extrabold text-slate-900 mt-1 font-mono">1250.0 mld PLN</div>
+            <span class="text-[10px] text-emerald-600 font-medium">Produkt Krajowy Brutto</span>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block font-mono">Produkcja Globalna ($\sum X$)</span>
+            <div id="kpiTotalX" class="text-xl font-extrabold text-blue-600 mt-1 font-mono">2534.8 mld PLN</div>
+            <span class="text-[10px] text-slate-500">Obrót brutto w gospodarce</span>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block font-mono">Zużycie Pośrednie ($\sum Z$)</span>
+            <div id="kpiIntermediate" class="text-xl font-extrabold text-slate-700 mt-1 font-mono">1284.8 mld PLN</div>
+            <span class="text-[10px] text-slate-500">Transakcje międzyfirmowe B2B</span>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block font-mono">Średni Mnożnik Produkcji</span>
+            <div id="kpiMultiplierAvg" class="text-xl font-extrabold text-emerald-600 mt-1 font-mono">2.03x</div>
+            <span class="text-[10px] text-emerald-700">Obrót / PKB</span>
+          </div>
+        </div>
+
+        <!-- STEROWANIE POPYTEM KOŃCOWYM (SUWAKI) -->
+        <div class="p-5 bg-white border border-slate-200 rounded-xl space-y-4">
+          <div class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono flex items-center justify-between">
+            <span>Kontrola Popytu Końcowego $Y$ (Konsumpcja + Inwestycje + Eksport)</span>
+            <span class="text-slate-400 font-normal">Wartości w mld PLN</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Sektor 1: Przemysł -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-xs font-medium">
+                <span class="text-blue-700 font-bold">1. Przemysł & Energetyka ($Y_1$)</span>
+                <span id="valY0" class="font-mono font-bold text-blue-600">420.0 mld PLN</span>
+              </div>
+              <input type="range" id="sliderY0" class="tactile-slider" min="150" max="800" step="10" value="420">
+              <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                <span>150 mld</span>
+                <span>800 mld</span>
+              </div>
+            </div>
+
+            <!-- Sektor 2: Rolnictwo -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-xs font-medium">
+                <span class="text-emerald-700 font-bold">2. Rolnictwo & Żywność ($Y_2$)</span>
+                <span id="valY1" class="font-mono font-bold text-emerald-600">150.0 mld PLN</span>
+              </div>
+              <input type="range" id="sliderY1" class="tactile-slider tactile-slider-emerald" min="50" max="400" step="5" value="150">
+              <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                <span>50 mld</span>
+                <span>400 mld</span>
+              </div>
+            </div>
+
+            <!-- Sektor 3: Usługi -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-xs font-medium">
+                <span class="text-amber-700 font-bold">3. Usługi & Technologie ($Y_3$)</span>
+                <span id="valY2" class="font-mono font-bold text-amber-600">680.0 mld PLN</span>
+              </div>
+              <input type="range" id="sliderY2" class="tactile-slider tactile-slider-amber" min="300" max="1200" step="20" value="680">
+              <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                <span>300 mld</span>
+                <span>1200 mld</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLICA PRZEPŁYWÓW MIĘDZYGAŁĘZIOWYCH (TABLICA ASYMETRYCZNA I-O) -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">
+              Interaktywna Tablica Przepływów Międzygałęziowych (mld PLN)
+            </h4>
+            <div class="flex items-center gap-3 text-[11px] font-mono">
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-white border border-slate-300 rounded"></span> Ćw. I: B2B</span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-emerald-50 border border-emerald-300 rounded"></span> Ćw. II: Popyt $Y$</span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-amber-50 border border-amber-300 rounded"></span> Ćw. III: Wartość $V$</span>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="io-table">
+              <thead>
+                <tr>
+                  <th class="w-44 text-slate-500 font-mono text-xs">Sektor Dostarczający ↓ \ Odbierający →</th>
+                  <th class="text-blue-700">1. Przemysł</th>
+                  <th class="text-emerald-700">2. Rolnictwo</th>
+                  <th class="text-amber-700">3. Usługi</th>
+                  <th class="bg-emerald-50 text-emerald-900 border-l-2 border-emerald-300">Popyt Końcowy ($Y$)</th>
+                  <th class="bg-blue-50 text-blue-900 font-bold border-l-2 border-blue-300">Produkcja Globalna ($X$)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Wiersz 1: Przemysł -->
+                <tr>
+                  <td class="font-bold text-blue-700">1. Przemysł & Energetyka</td>
+                  <td id="cell_z_0_0" class="quadrant-1 font-mono">0.0</td>
+                  <td id="cell_z_0_1" class="quadrant-1 font-mono">0.0</td>
+                  <td id="cell_z_0_2" class="quadrant-1 font-mono">0.0</td>
+                  <td id="cell_y_0" class="quadrant-2 font-mono font-bold text-emerald-700 border-l-2 border-emerald-300">420.0</td>
+                  <td id="cell_x_row_0" class="quadrant-total font-mono font-bold text-blue-700 border-l-2 border-blue-300">0.0</td>
+                </tr>
+
+                <!-- Wiersz 2: Rolnictwo -->
+                <tr>
+                  <td class="font-bold text-emerald-700">2. Rolnictwo & Żywność</td>
+                  <td id="cell_z_1_0" class="quadrant-1 font-mono">0.0</td>
+                  <td id="cell_z_1_1" class="quadrant-1 font-mono">0.0</td>
+                  <td id="cell_z_1_2" class="quadrant-1 font-mono">0.0</td>
+                  <td id="cell_y_1" class="quadrant-2 font-mono font-bold text-emerald-700 border-l-2 border-emerald-300">150.0</td>
+                  <td id="cell_x_row_1" class="quadrant-total font-mono font-bold text-emerald-700 border-l-2 border-blue-300">0.0</td>
+                </tr>
+
+                <!-- Wiersz 3: Usługi -->
+                <tr>
+                  <td class="font-bold text-amber-700">3. Usługi & Technologie</td>
+                  <td id="cell_z_2_0" class="quadrant-1 font-mono">0.0</td>
+                  <td id="cell_z_2_1" class="quadrant-1 font-mono">0.0</td>
+                  <td id="cell_z_2_2" class="quadrant-1 font-mono">0.0</td>
+                  <td id="cell_y_2" class="quadrant-2 font-mono font-bold text-emerald-700 border-l-2 border-emerald-300">680.0</td>
+                  <td id="cell_x_row_2" class="quadrant-total font-mono font-bold text-amber-700 border-l-2 border-blue-300">0.0</td>
+                </tr>
+
+                <!-- Zużycie Pośrednie Suma Kolumny -->
+                <tr class="bg-slate-50 border-t-2 border-slate-300">
+                  <td class="font-semibold text-slate-700">Zużycie Pośrednie Razem</td>
+                  <td id="cell_inter_col_0" class="font-mono font-semibold text-slate-700">0.0</td>
+                  <td id="cell_inter_col_1" class="font-mono font-semibold text-slate-700">0.0</td>
+                  <td id="cell_inter_col_2" class="font-mono font-semibold text-slate-700">0.0</td>
+                  <td id="cell_sum_inter" class="font-mono font-bold text-slate-700 border-l-2 border-emerald-300">0.0</td>
+                  <td class="text-slate-400 border-l-2 border-blue-300 font-mono">-</td>
+                </tr>
+
+                <!-- Ćwiartka III: Wartość Dodana Brutto -->
+                <tr class="bg-amber-50/50">
+                  <td class="font-bold text-amber-800">Wartość Dodana Brutto ($V$)</td>
+                  <td id="cell_v_0" class="quadrant-3 font-mono font-bold text-amber-800">0.0</td>
+                  <td id="cell_v_1" class="quadrant-3 font-mono font-bold text-amber-800">0.0</td>
+                  <td id="cell_v_2" class="quadrant-3 font-mono font-bold text-amber-800">0.0</td>
+                  <td class="border-l-2 border-emerald-300 font-mono text-slate-400">-</td>
+                  <td id="cell_sum_v" class="font-mono font-extrabold text-emerald-700 border-l-2 border-blue-300 bg-emerald-100/70">1250.0</td>
+                </tr>
+
+                <!-- Nakłady Globalne (Suma Kolumny) -->
+                <tr class="bg-blue-50/60 font-bold border-t-2 border-blue-300">
+                  <td class="text-blue-900">Nakłady Globalne ($X_j$)</td>
+                  <td id="cell_x_col_0" class="font-mono text-blue-900">0.0</td>
+                  <td id="cell_x_col_1" class="font-mono text-emerald-900">0.0</td>
+                  <td id="cell_x_col_2" class="font-mono text-amber-900">0.0</td>
+                  <td id="cell_sum_y" class="font-mono font-extrabold text-emerald-800 border-l-2 border-emerald-300 bg-emerald-100/70">1250.0</td>
+                  <td id="cell_sum_grand_x" class="font-mono font-black text-blue-900 border-l-2 border-blue-300 bg-blue-100">0.0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-[11px] text-slate-500 italic text-right">
+            Zwróć uwagę: Suma popytu końcowego (komórka zielona = <span id="syncGdpY">PKB</span>) jest tożsamościowo równa sumie wartości dodanej (komórka zielona dolna = <span id="syncGdpV">PKB</span>).
+          </div>
+        </div>
+
+        <!-- PODGLĄD MACIERZY A ORAZ MACIERZY ODWRÓCONEJ (I - A)^-1 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800 font-mono">Macierz Współczynników $A$ (Koszty Bezpośrednie)</span>
+              <span class="text-[10px] text-slate-500 font-mono">$a_{ij} = z_{ij} / X_j$</span>
+            </div>
+            <div id="matrixADisplay" class="p-3 bg-slate-100/70 border border-slate-200 rounded-xl"></div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-blue-800 font-mono">Macierz Odwrotna Leontiefa $L = (I - A)^{-1}$</span>
+              <span class="text-[10px] text-blue-600 font-mono">Pełne Mnożniki</span>
+            </div>
+            <div id="matrixLDisplay" class="p-3 bg-blue-50/50 border border-blue-200 rounded-xl"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 6: GRAF SIECI PRZEPŁYWÓW MIĘDZYSEKTOROWYCH                    -->
+      <!-- ===================================================================== -->
+      <section id="m6-siec" class="saas-card p-6 md:p-8 space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-blue-600 font-mono text-sm font-bold">06.</span>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900">Dynamiczny Graf Przepływów Gospodarczych</h3>
+              <p class="text-xs text-slate-500">Wizualizacja strumieni dóbr, pętli wewnętrznych i cząstek wymiany</p>
+            </div>
+          </div>
+          <span class="px-2.5 py-1 bg-slate-100 text-slate-700 border border-slate-200 rounded-md text-xs font-mono">
+            HTML5 Canvas 2D
+          </span>
+        </div>
+
+        <div class="text-sm text-slate-700 leading-relaxed">
+          Poniższy interaktywny model prezentuje gospodarkę jako graf skierowany. Węzły reprezentują sektory, a grubości krawędzi odzwierciedlają wolumen dostaw $z_{ij}$ w miliardach złotych. Cząstki płynące wzdłuż krawędzi ilustrują realny obieg wartości materialnych zasilających procesy produkcyjne.
+        </div>
+
+        <div class="relative">
+          <canvas id="networkCanvas"></canvas>
+          <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-slate-200 text-[11px] font-mono text-slate-600">
+            Krawędzie: Strumienie dostaw $z_{ij}$ | Pętle: Zużycie wewnątrzsektorowe $z_{ii}$
+          </div>
+        </div>
+
+        <!-- WYKRES STRUKTURY PRODUKCJI -->
+        <div class="pt-4 border-t border-slate-100">
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">
+              Dekompozycja Produkcji: Wartość Dodana (PKB) vs Zużycie Pośrednie
+            </h4>
+          </div>
+          <div id="structureChart" class="w-full"></div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 7: POWIĄZANIA W PRZÓD I W TYŁ (HIRSCHMAN & RASMUSSEN)          -->
+      <!-- ===================================================================== -->
+      <section id="m7-powiazania" class="saas-card p-6 md:p-8 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+          <span class="text-blue-600 font-mono text-sm font-bold">07.</span>
+          <h3 class="text-xl font-bold text-slate-900">Powiązania w Przód i w Tył: Wskaźniki Rasmussena i Hirschmana</h3>
+        </div>
+
+        <div class="text-sm text-slate-700 leading-relaxed space-y-4">
+          <p>
+            Nie wszystkie sektory są jednakowo ważne dla dynamiki makroekonomicznej. Ekonomista Albert O. Hirschman (1958) oraz Poul N. Rasmussen (1956) zaproponowali wskaźniki powiązań oparte na macierzy odwrotnej Leontiefa, pozwalające zidentyfikować <strong>gałęzie kluczowe (key sectors)</strong> dla rozwoju kraju.
+          </p>
+        </div>
+
+        <!-- DEFINICJE WSKAŹNIKÓW -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 bg-emerald-50/60 border border-emerald-200 rounded-xl space-y-2">
+            <span class="text-xs font-bold font-mono text-emerald-800">Powiązania Wsteczne (Backward Linkages - $BL_j$)</span>
+            <div class="text-xs font-bold text-slate-900">Siła Rozproszenia (Power of Dispersion)</div>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Mierzy sumę kolumny macierzy $L$. Informuje, jak silny impuls popytowy dany sektor wysyła do swoich dostawców.
+            </p>
+            <div class="font-mono text-xs text-slate-900 bg-white p-2 rounded border border-emerald-200">
+              $$BL_j = \frac{\frac{1}{n} \sum_{i=1}^n l_{ij}}{\frac{1}{n^2} \sum_{i=1}^n \sum_{j=1}^n l_{ij}}$$
+            </div>
+            <p class="text-[11px] text-emerald-800 font-medium">
+              Jeśli $BL_j > 1$, sektor ciągnie resztę gospodarki silniej niż przeciętna gałąź!
+            </p>
+          </div>
+
+          <div class="p-4 bg-blue-50/60 border border-blue-200 rounded-xl space-y-2">
+            <span class="text-xs font-bold font-mono text-blue-800">Powiązania w Przód (Forward Linkages - $FL_i$)</span>
+            <div class="text-xs font-bold text-slate-900">Wrażliwość na Rozproszenie (Sensitivity of Dispersion)</div>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Mierzy sumę wiersza macierzy $L$. Informuje, jak bardzo sektor reaguje na wzrost popytu w całej reszcie gospodarki (rola zaopatrzeniowa).
+            </p>
+            <div class="font-mono text-xs text-slate-900 bg-white p-2 rounded border border-blue-200">
+              $$FL_i = \frac{\frac{1}{n} \sum_{j=1}^n l_{ij}}{\frac{1}{n^2} \sum_{i=1}^n \sum_{j=1}^n l_{ij}}$$
+            </div>
+            <p class="text-[11px] text-blue-800 font-medium">
+              Jeśli $FL_i > 1$, sektor jest kluczowym dostawcą surowców lub półproduktów.
+            </p>
+          </div>
+        </div>
+
+        <!-- TABELA AKTUALNYCH WSKAŹNIKÓW DLA 3 SEKTORÓW -->
+        <div class="space-y-3">
+          <div class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">
+            Aktualna Klasyfikacja Sektorów w Modelu
+          </div>
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-50 text-slate-600 font-mono border-b border-slate-200">
+                <tr>
+                  <th class="p-3">Sektor</th>
+                  <th class="p-3">Mnożnik Produkcji</th>
+                  <th class="p-3">Backward Linkage ($BL$)</th>
+                  <th class="p-3">Forward Linkage ($FL$)</th>
+                  <th class="p-3">Typ Strategiczny</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-3 font-bold text-blue-700">1. Przemysł & Energetyka</td>
+                  <td id="mult_s_0" class="p-3 font-mono font-bold">0.0</td>
+                  <td id="bl_s_0" class="p-3 font-mono">0.0</td>
+                  <td id="fl_s_0" class="p-3 font-mono">0.0</td>
+                  <td class="p-3"><span id="class_s_0">Kluczowy</span></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-bold text-emerald-700">2. Rolnictwo & Żywność</td>
+                  <td id="mult_s_1" class="p-3 font-mono font-bold">0.0</td>
+                  <td id="bl_s_1" class="p-3 font-mono">0.0</td>
+                  <td id="fl_s_1" class="p-3 font-mono">0.0</td>
+                  <td class="p-3"><span id="class_s_1">Ciągnący Popytowo</span></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-bold text-amber-700">3. Usługi & Technologie</td>
+                  <td id="mult_s_2" class="p-3 font-mono font-bold">0.0</td>
+                  <td id="bl_s_2" class="p-3 font-mono">0.0</td>
+                  <td id="fl_s_2" class="p-3 font-mono">0.0</td>
+                  <td class="p-3"><span id="class_s_2">Bazowy</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 8: SYMULATOR SZOKÓW MAKROEKONOMICZNYCH I POLITYKI            -->
+      <!-- ===================================================================== -->
+      <section id="m8-scenariusze" class="saas-card p-6 md:p-8 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+          <span class="text-blue-600 font-mono text-sm font-bold">08.</span>
+          <h3 class="text-xl font-bold text-slate-900">Symulator Szoków Makroekonomicznych i Polityki Gospodarczej</h3>
+        </div>
+
+        <div class="text-sm text-slate-700 leading-relaxed">
+          Wybierz jeden z predefiniowanych scenariuszy, aby sprawdzić, jak model Leontiefa reaguje na decyzje fiskalne rządu, wstrząsy podażowe na rynkach surowców oraz zmiany struktury popytu:
+        </div>
+
+        <!-- PRZYCISKI SCENARIUSZY -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <button class="scenario-btn p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-blue-400 transition space-y-1 active" data-scenario="baseline">
+            <div class="text-xs font-bold text-slate-900">⚖️ Stan Bazowy</div>
+            <div class="text-[10px] text-slate-500">Gospodarka zrównoważona</div>
+          </button>
+
+          <button class="scenario-btn p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-blue-400 transition space-y-1" data-scenario="cpk">
+            <div class="text-xs font-bold text-slate-900">🏗️ Inwestycje CPK & Atom</div>
+            <div class="text-[10px] text-slate-500">+60 mld PLN na przemysł</div>
+          </button>
+
+          <button class="scenario-btn p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-blue-400 transition space-y-1" data-scenario="energy_shock">
+            <div class="text-xs font-bold text-slate-900">⚡ Szok Energetyczny</div>
+            <div class="text-[10px] text-slate-500">Wzrost kosztów nośników energii</div>
+          </button>
+
+          <button class="scenario-btn p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-blue-400 transition space-y-1" data-scenario="tech_boom">
+            <div class="text-xs font-bold text-slate-900">💻 Boom Eksportu IT</div>
+            <div class="text-[10px] text-slate-500">+70 mld PLN na usługi</div>
+          </button>
+
+          <button class="scenario-btn p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-blue-400 transition space-y-1" data-scenario="recession">
+            <div class="text-xs font-bold text-slate-900">📉 Recesja Popytowa</div>
+            <div class="text-[10px] text-slate-500">-15% konsumpcji w kraju</div>
+          </button>
+        </div>
+
+        <div id="scenarioDesc" class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 leading-relaxed">
+          <strong>Stan Bazowy:</strong> Zrównoważona struktura gospodarki z dominacją usług w popycie końcowym i silnym przemysłem.
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 9: GVC, ŚLAD WĘGLOWY I WSPÓŁCZESNE ROZWINIĘCIA                -->
+      <!-- ===================================================================== -->
+      <section id="m9-zastosowania" class="saas-card p-6 md:p-8 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+          <span class="text-blue-600 font-mono text-sm font-bold">09.</span>
+          <h3 class="text-xl font-bold text-slate-900">Globalne Łańcuchy Wartości (GVC) & Ekologiczne Modele EEIO</h3>
+        </div>
+
+        <div class="text-sm text-slate-700 leading-relaxed space-y-4">
+          <p>
+            W XXI wieku model Leontiefa stał się fundamentem dwóch kluczowych obszarów analizy makroekonomicznej:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- GVC i TiVA -->
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+            <div class="text-xs font-bold text-blue-700 uppercase tracking-wider font-mono">1. Handel Wartością Dodaną (OECD TiVA / WIOD)</div>
+            <h4 class="text-sm font-bold text-slate-900">Koniec z Podwójnym Liczeniem w Handlu Międzynarodowym</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Tradycyjne statystyki celne rejestrują pełną wartość iPhone'a eksportowanego z Chin do USA (np. 1000 USD), mimo że chińska fabryka dodała jedynie 40 USD wartości za montaż, a procesor i ekran powstały w Korei, Niemczech i USA.
+            </p>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Dzięki wielonarodowym tablicom I-O (Inter-Country Input-Output) ekonomiści dekomponują eksport brutto na <strong>krajową wartość dodaną (DVA)</strong> oraz <strong>zagraniczną wartość dodaną (FVA)</strong>.
+            </p>
+          </div>
+
+          <!-- EEIO i Ślad Węglowy -->
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+            <div class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">2. Modele Środowiskowe (EEIO - Scope 1, 2, 3)</div>
+            <h4 class="text-sm font-bold text-slate-900">Kto Naprawdę Emituje CO2: Producent czy Konsument?</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Do modelu Leontiefa dodaje się wektor współczynników emisji $e = [e_1, \dots, e_n]$, gdzie $e_i$ to tony CO2 emitowane bezpośrednio na jednostkę produkcji gałęzi $i$.
+            </p>
+            <div class="bg-white p-2.5 rounded border border-slate-200 font-mono text-xs text-slate-800">
+              $$\text{Emisje Wbudowane} = e \cdot (I - A)^{-1} \cdot Y$$
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Pozwala to obliczyć ślad węglowy <strong>Scope 3</strong> wbudowany w dobra konsumowane w Europie, a wyprodukowane w Azji, stanowiąc bazę dla podatku granicznego CBAM (Carbon Border Adjustment Mechanism).
+            </p>
+          </div>
+        </div>
+
+        <!-- OGRANICZENIA MODELU -->
+        <div class="p-4 bg-rose-50/70 border border-rose-200 rounded-xl space-y-2">
+          <div class="text-xs font-bold font-mono text-rose-800">
+            ⚠️ Ograniczenia i Założenia Klasycznego Modelu Leontiefa
+          </div>
+          <ul class="text-xs text-rose-900 space-y-1.5 list-disc pl-4 leading-relaxed">
+            <li><strong>Brak substytucji czynników:</strong> Sztywne współczynniki $a_{ij}$ zakładają, że wzrost cen gazu o 300% nie spowoduje zastąpienia go węglem lub elektrycznością w krótkim okresie.</li>
+            <li><strong>Nieskończona elastyczność podaży:</strong> Model popytowy zakłada brak barier w zdolnościach produkcyjnych (brak wąskich gardeł w dostępności pracowników czy maszyn).</li>
+            <li><strong>Stałe korzyści skali:</strong> Podwojenie produkcji wymaga dokładnie podwojenia wszystkich nakładów pośrednich.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 10: SPRAWDZIAN WIEDZY (INTERAKTYWNY QUIZ)                     -->
+      <!-- ===================================================================== -->
+      <section id="m10-quiz" class="saas-card p-6 md:p-8 space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-blue-600 font-mono text-sm font-bold">10.</span>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900">Sprawdzian Zrozumienia: Quiz Teoretyczno-Empiryczny</h3>
+              <p class="text-xs text-slate-500">5 pytań weryfikujących zrozumienie mechaniki modelu Leontiefa</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="quizContainer" class="space-y-4"></div>
+
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+          <button id="btnSubmitQuiz" class="btn-primary text-xs" disabled>
+            Sprawdź Odpowiedzi (0/5)
+          </button>
+        </div>
+
+        <div id="quizResultAlert" class="hidden p-4 bg-emerald-50 border border-emerald-200 rounded-xl"></div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 11: IMPLEMENTACJA PRODUKCYJNA W PYTHONIE (NUMPY / PANDAS)     -->
+      <!-- ===================================================================== -->
+      <section id="m11-python" class="saas-card p-6 md:p-8 space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-blue-600 font-mono text-sm font-bold">11.</span>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900">Produkcyjna Implementacja w Pythonie (NumPy & SciPy)</h3>
+              <p class="text-xs text-slate-500">Samodzielny skrypt rozwiązujący model i szacujący wskaźniki Rasmussena</p>
+            </div>
+          </div>
+          <button id="btnCopyPython" class="btn-secondary text-xs">
+            <span>📋 Kopiuj Kod</span>
+          </button>
+        </div>
+
+        <div class="text-sm text-slate-700 leading-relaxed">
+          Poniższy minimalistyczny kod w Pythonie implementuje pełny model Leontiefa, testuje warunki Hawkinsa-Simona, oblicza macierz odwrotną, mnożniki produkcji oraz symuluje szok popytowy:
+        </div>
+
+        <div class="rounded-xl overflow-hidden border border-slate-800">
+          <div class="code-block-header font-mono">
+            <span>leontief_model.py</span>
+            <span>Python 3.10+ / NumPy</span>
+          </div>
+          <pre class="code-block-body"><code id="pythonCodeText">import numpy as np
+import pandas as pd
+
+class LeontiefInputOutputModel:
+    """
+    Model przepływów międzygałęziowych Wassily'ego Leontiefa (Model Otwarty Statyczny).
+    Implementacja sprawdzająca warunki Hawkinsa-Simona i obliczająca wskaźniki Rasmussena.
+    """
+    def __init__(self, sector_names, A_matrix, final_demand):
+        self.sectors = sector_names
+        self.A = np.array(A_matrix, dtype=float)
+        self.Y = np.array(final_demand, dtype=float)
+        self.n = len(sector_names)
+        
+        # Weryfikacja wymiarów
+        assert self.A.shape == (self.n, self.n), "Macierz A musi być kwadratowa n x n"
+        assert self.Y.shape == (self.n,), "Wektor Y musi mieć długość n"
+
+    def check_hawkins_simon(self):
+        """Weryfikacja produktywności gospodarki wg Hawkinsa-Simona (1949)."""
+        I = np.eye(self.n)
+        I_minus_A = I - self.A
+        
+        # Warunek 1: sumy kolumn < 1
+        col_sums = self.A.sum(axis=0)
+        assert np.all(col_sums < 1.0), f"Złamanie produktywności: sumy kolumn A >= 1: {col_sums}"
+        
+        # Warunek 2: minory główne > 0
+        for k in range(1, self.n + 1):
+            sub_det = np.linalg.det(I_minus_A[:k, :k])
+            assert sub_det > 0, f"Złamano warunek Hawkinsa-Simona: minor główny rzędu {k} <= 0"
+        return True
+
+    def solve(self):
+        """Rozwiązanie modelu: X = (I - A)^(-1) * Y."""
+        self.check_hawkins_simon()
+        I = np.eye(self.n)
+        
+        # Macierz odwrotna Leontiefa (L)
+        self.L = np.linalg.inv(I - self.A)
+        
+        # Wektor produkcji globalnej (X)
+        self.X = self.L @ self.Y
+        
+        # Macierz przepływów międzygałęziowych Z = A * diag(X)
+        self.Z = self.A * self.X[np.newaxis, :]
+        
+        # Wartość dodana brutto V = X - sum_wierszy(Z)
+        self.V = self.X - self.Z.sum(axis=0)
+        
+        return self.X
+
+    def get_rasmussen_linkages(self):
+        """Oblicza mnożniki produkcji oraz wskaźniki powiązań Backward i Forward."""
+        # Mnożniki produkcji (sumy kolumn macierzy L)
+        multipliers = self.L.sum(axis=0)
+        total_sum = multipliers.sum()
+        avg_L = total_sum / self.n
+        
+        # Backward linkages (kolumny)
+        bl = multipliers / avg_L
+        
+        # Forward linkages (wiersze)
+        row_sums = self.L.sum(axis=1)
+        fl = row_sums / avg_L
+        
+        return pd.DataFrame({
+            'Sektor': self.sectors,
+            'Mnożnik Produkcji': multipliers,
+            'Backward Linkage (BL)': bl,
+            'Forward Linkage (FL)': fl
+        })
+
+    def simulate_demand_shock(self, delta_Y):
+        """Szacuje efekt makroekonomiczny szoku popytowego: Delta_X = L * Delta_Y."""
+        delta_Y = np.array(delta_Y, dtype=float)
+        delta_X = self.L @ delta_Y
+        delta_gdp = np.sum(delta_Y)
+        return delta_X, delta_gdp
+
+# === PRZYKŁAD UŻYCIA DLA POLSKI (3 SEKTORY) ===
+if __name__ == "__main__":
+    sectors = ['Przemysł & Energia', 'Rolnictwo & Żywność', 'Usługi & IT']
+    
+    # Macierz kosztów bezpośrednich A
+    A = [
+        [0.28, 0.22, 0.12],
+        [0.04, 0.25, 0.05],
+        [0.18, 0.15, 0.32]
+    ]
+    
+    # Popyt końcowy Y (mld PLN)
+    Y = [420.0, 150.0, 680.0]
+    
+    model = LeontiefInputOutputModel(sectors, A, Y)
+    X = model.solve()
+    
+    print("=== WYNIKI ROZWIĄZANIA MODELU LEONTIEFA ===")
+    for s, x, v in zip(sectors, X, model.V):
+        print(f"{s:20}: Produkcja X = {x:6.1f} mld PLN | Wartość Dodana V = {v:6.1f} mld PLN")
+        
+    print(f"\nTożsamość PKB: Suma Y = {sum(Y):.1f} mld PLN == Suma V = {sum(model.V):.1f} mld PLN")
+    
+    print("\n=== WSKAŹNIKI POWIĄZAŃ RASMUSSENA ===")
+    print(model.get_rasmussen_linkages().to_string(index=False))
+</code></pre>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- MODUŁ 12: BIBLIOGRAFIA I ŹRÓDŁA AKADEMICKIE                          -->
+      <!-- ===================================================================== -->
+      <section id="m12-zrodla" class="saas-card p-6 md:p-8 space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+          <span class="text-blue-600 font-mono text-sm font-bold">12.</span>
+          <h3 class="text-xl font-bold text-slate-900">Bibliografia i Dalsza Lektura</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-700">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="font-bold text-slate-900">Pozycje Fundamentalne:</div>
+            <ul class="space-y-1.5 list-disc pl-4 text-slate-600">
+              <li><strong>Leontief, W. (1936):</strong> <em>Quantitative Input and Output Relations in the Economic System of the United States</em>, The Review of Economics and Statistics.</li>
+              <li><strong>Leontief, W. (1941):</strong> <em>The Structure of American Economy, 1919-1929</em>, Harvard University Press.</li>
+              <li><strong>Miller, R. E., Blair, P. D. (2009):</strong> <em>Input-Output Analysis: Foundations and Extensions</em>, Cambridge University Press (Kompletny podręcznik akademicki).</li>
+              <li><strong>Hawkins, D., Simon, H. A. (1949):</strong> <em>Note: Some Conditions of Macroeconomic Stability</em>, Econometrica.</li>
+            </ul>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="font-bold text-slate-900">Standardy Statystyki Narodowej & Bazy Danych:</div>
+            <ul class="space-y-1.5 list-disc pl-4 text-slate-600">
+              <li><strong>Główny Urząd Statystyczny (GUS):</strong> <em>Bilans przepływów międzygałęziowych w bieżących i stałych cenach bazowych</em> (Publikacje 5-letnie).</li>
+              <li><strong>Eurostat (2008):</strong> <em>Eurostat Manual of Supply, Use and Input-Output Tables</em>, Methodologies and Working Papers.</li>
+              <li><strong>OECD TiVA:</strong> <em>Trade in Value Added Database</em> (Dekompozycja łańcuchów GVC).</li>
+              <li><strong>WIOD (World Input-Output Database):</strong> Globalna baza danych dla 43 państw świata.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- STOPKA SERWISU -->
+      <footer class="pt-8 pb-16 text-center text-xs text-slate-500 border-t border-slate-200 space-y-2">
+        <div>
+          Lyceum: Interaktywne Kompendia Pojęciowe | Traktat o Przepływach Międzygałęziowych
+        </div>
+        <div class="font-mono text-[11px] text-slate-400">
+          Standard SaaS Light EdTech • Zero-Overhead Stack • Rozwiązanie Analityczne w Czasie Rzeczywistym
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Inicjalizacja skryptu aplikacji -->
+  <script src="app.js"></script>
+</body>
+</html>
